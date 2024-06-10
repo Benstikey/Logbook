@@ -1,5 +1,5 @@
 const { db } = require('@vercel/postgres');
-const { users, movies, books, flights } = require('@/lib/placeholder-data.js');
+const { users, movies, books, flights } = require('../lib/placeholder-data');
 const bcrypt = require('bcrypt');
 
 async function seedUsers() {
@@ -38,11 +38,6 @@ async function seedUsers() {
         throw error;
     }
 }
-
-// Call the seedUsers function to start seeding the users data
-seedUsers().catch((err) => {
-    console.error('An error occurred while seeding the database:', err);
-});
 
 async function seedMovies() {
     try {
