@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
-import { storeData } from '@/app/lib/placeholder-data.js'; // Import the storeData function
+import { storeData } from '@/lib/placeholder-data.js'; // Import the storeData function
 import { Calendar } from "@/components/ui/calendar"
 
 const ActivityCard: React.FC = () => {

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import NavbarMenu from '@/app/ui/navbar-menu';
 import CategoryCard from '@/app/ui/category-card';
 import ActivityLogCard from '@/app/ui/activity-log-card';
-import { movies, books } from '@/app/lib/placeholder-data.js';
+import { movies, books } from '@/lib/placeholder-data.js';
 import { Button } from "@/components/ui/button"
 
 const MyLogbookPage: React.FC = () => {
