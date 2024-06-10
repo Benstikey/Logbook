@@ -13,7 +13,7 @@ const NavbarMenu: React.FC<NavbarMenuProps> = ({ onCategoryChange }) => {
     };
 
     return (
-        <div className="flex items-center p-1 border border-solid border-slate-200 rounded-md shadow-md">
+        <div className="flex items-center p-1 border border-solid border-slate-200 rounded-md shadow">
             <label className="flex items-center">
                 <input
                     type="radio"

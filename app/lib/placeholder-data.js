@@ -1,4 +1,3 @@
-// Additional functions for data manipulation can be added if needed
 // placeholder-data.js
 export const storeData = (inputData, category) => {
     const newData = {
@@ -18,13 +17,15 @@ export const storeData = (inputData, category) => {
             books.push(newData);
             console.log('Updated Books Data:', books);
             break;
+        case 'Flights':
+            flights.push(newData);
+            console.log('Updated Flights Data:', flights);
+            break;
         // Add cases for other categories as needed
         default:
             // Handle default or other categories
             break;
     }
-    // Log the updated movies array for verification
-    console.log('Updated Movies Data:', movies);
 };
 
 export const movies = [
@@ -35,7 +36,7 @@ export const movies = [
         info3: 'Review: 10/10'
     },
     { 
-        title: 'Chilren of Men', 
+        title: 'Children of Men', 
         info1: '06/09/2024', 
         info2: 'Watched with: Alone', 
         info3: 'Review: 9/10' 
@@ -54,5 +55,29 @@ export const books = [
         info1: '2022-03-25', 
         info2: 'Read on: E-book', 
         info3: 'Written by: Author Y' 
+    },
+];
+
+export const flights = [
+    { 
+        title: 'Flight A', 
+        info1: 'Departure: 03/20/2022', 
+        info2: 'Arrival: 03/21/2022', 
+        info3: 'Airline: XYZ Airlines' 
+    },
+    { 
+        title: 'Flight B', 
+        info1: 'Departure: 06/09/2024', 
+        info2: 'Arrival: 06/10/2024', 
+        info3: 'Airline: ABC Airlines' 
+    },
+];
+
+export const users = [
+    {
+        id: '410544b2-4001-4271-9855-fec4b6a6442a',
+        name: 'Wassim',
+        email: 'benstikey@gmail.com',
+        password: '123456',
     },
 ];
