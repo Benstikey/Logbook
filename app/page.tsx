@@ -43,12 +43,12 @@ const MyLogbookPage: React.FC = () => {
                 {/* Conditional Rendering of CategoryCards */}
                 {selectedCategory === 'All Categories' && (
                     <>
-                        <CategoryCard title="Movies" subtitle="Movies I watched" contentList={movies} />
+                      {/* <CategoryCard title="Movies" subtitle="Movies I watched" contentList={movies} /> */}
                         <CategoryCard title="Books" subtitle="Books I read" contentList={books} />
                         {/* Add more CategoryCard components for other categories */}
                     </>
                 )}
-                {selectedCategory === 'Movies' && <CategoryCard title="Movies" subtitle="Movies I watched" contentList={movies} />}
+                {/*selectedCategory === 'Movies' && <CategoryCard title="Movies" subtitle="Movies I watched" contentList={movies} />*/}
                 {selectedCategory === 'Books' && <CategoryCard title="Books" subtitle="Books I read" contentList={books} />}
                 {/* Conditionally render other CategoryCards based on selectedCategory */}
             </div>
