@@ -48,9 +48,9 @@ async function seedMovies() {
             CREATE TABLE IF NOT EXISTS movies (
                 id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
                 title VARCHAR(255) NOT NULL,
-                release_date DATE,
-                director VARCHAR(255),
-                genre VARCHAR(255)
+                date_watched DATE,
+                watched_with VARCHAR(255),
+                review VARCHAR(255)
             );
         `;
 
@@ -60,8 +60,8 @@ async function seedMovies() {
         const insertedMovies = await Promise.all(
             movies.map(async (movie) => {
                 return db.sql`
-                    INSERT INTO movies (id, title, release_date, director, genre)
-                    VALUES (${movie.id}, ${movie.title}, ${movie.release_date}, ${movie.director}, ${movie.genre})
+                    INSERT INTO movies (id, title, date_watched, watched_with, review)
+                    VALUES (${movie.id}, ${movie.title}, ${movie.info1}, ${movie.info2}, ${movie.info3})
                     ON CONFLICT (id) DO NOTHING;
                 `;
             })
@@ -85,9 +85,9 @@ async function seedBooks() {
             CREATE TABLE IF NOT EXISTS books (
                 id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
                 title VARCHAR(255) NOT NULL,
-                author VARCHAR(255),
-                publication_date DATE,
-                genre VARCHAR(255)
+                date_watched DATE,
+                watched_with VARCHAR(255)
+                review VARCHAR(10)
             );
         `;
 
@@ -97,8 +97,8 @@ async function seedBooks() {
         const insertedBooks = await Promise.all(
             books.map(async (book) => {
                 return db.sql`
-                    INSERT INTO books (id, title, author, publication_date, genre)
-                    VALUES (${book.id}, ${book.title}, ${book.author}, ${book.publication_date}, ${book.genre})
+                    INSERT INTO books (id, title, date_watched, watched_with, review)
+                    VALUES (${book.id}, ${book.title}, ${book.info1}, ${book.info2}, ${book.info3})
                     ON CONFLICT (id) DO NOTHING;
                 `;
             })
@@ -121,12 +121,10 @@ async function seedFlights() {
         await db.sql`
             CREATE TABLE IF NOT EXISTS flights (
                 id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+                departure_arrival VARCHAR(255),
                 flight_number VARCHAR(10) NOT NULL,
-                departure_city VARCHAR(255),
-                arrival_city VARCHAR(255),
-                departure_date DATE,
                 arrival_date DATE,
-                airline VARCHAR(255)
+                distance_traveled VARCHAR(10) NOT NULL,
             );
         `;
 
@@ -136,8 +134,8 @@ async function seedFlights() {
         const insertedFlights = await Promise.all(
             flights.map(async (flight) => {
                 return db.sql`
-                    INSERT INTO flights (id, flight_number, departure_city, arrival_city, departure_date, arrival_date, airline)
-                    VALUES (${flight.id}, ${flight.flight_number}, ${flight.departure_city}, ${flight.arrival_city}, ${flight.departure_date}, ${flight.arrival_date}, ${flight.airline})
+                    INSERT INTO flights (id, departure_arrival, flight_number, arrival_date, distance_traveled)
+                    VALUES (${flight.id}, ${flight.title}, ${flight.info1}, ${flight.info2}, ${flight.info3})
                     ON CONFLICT (id) DO NOTHING;
                 `;
             })
