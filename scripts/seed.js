@@ -61,7 +61,7 @@ async function seedMovies() {
             movies.map(async (movie) => {
                 return db.sql`
                     INSERT INTO movies (id, title, date_watched, watched_with, review)
-                    VALUES (${movie.id}, ${movie.title}, ${movie.info1}, ${movie.info2}, ${movie.info3})
+                    VALUES (${movie.id}, ${movie.title}, ${movie.date_watched}, ${movie.watched_with}, ${movie.review})
                     ON CONFLICT (id) DO NOTHING;
                 `;
             })
