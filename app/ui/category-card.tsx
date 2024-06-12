@@ -26,21 +26,21 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ title, subtitle, contentLis
     return (
         <div className="w-full max-w-sm h-full border border-solid border-slate-200 rounded-md shadow p-4">
             <div className="flex flex-col gap-1 pb-3">
-                <h2 className="text-lg font-medium">{title}</h2>
-                <p className="text-sm text-slate-400 pb-2">{subtitle}</p>
+                <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">{title}</h2>
+                <p className="text-sm text-muted-foreground pb-3">{subtitle}</p>
                 <Separator />
             </div>
             {contentList.map((content, index) => (
                 <div key={index} onClick={() => handleContentClick(content)} className="cursor-pointer p-1 my-1 rounded">
                     <div className="flex flex-row items-center justify-between gap-2">
-                        <h3 className="font-semibold">{content.title}</h3>
+                        <h3 className="scroll-m-20 text font-semibold tracking-tight">{content.title}</h3>
                         <Separator className="flex-1"/>
-                        <p className="text-slate-500">{content.info1}</p>
+                        <p className="text-sm text-muted-foreground">{content.info1}</p>
                     </div>
                     {expandedContent === content && (
-                        <div className="mt-2">
-                            <p>{content.info2}</p>
-                            <p>{content.info3}</p>
+                        <div className="flex flex-col mt-2 gap-1">
+                            <p className="text-sm text-muted-foreground">{content.info2}</p>
+                            <p className="text-sm text-muted-foreground">{content.info3}</p>
                         </div>
                     )}
                 </div>

@@ -62,6 +62,18 @@ const NavbarMenu: React.FC<NavbarMenuProps> = ({ onCategoryChange }) => {
                     Books
                 </span>
             </label>
+            <label className="flex items-center space-x-2">
+                <input
+                    type="radio"
+                    value="Flights"
+                    checked={selectedCategory === 'Flights'}
+                    onChange={() => handleCategoryChange('Flights')}
+                    className="appearance-none border-none outline-none focus:outline-none"
+                />
+                <span className={`font-medium rounded px-3 py-2 cursor-pointer ${selectedCategory === 'Flights' ? 'bg-gray-100' : ''}`}>
+                    Flights
+                </span>
+            </label>
             {/* Add more category options as needed */}
         </div>
     );
