@@ -19,6 +19,24 @@ interface CategoryCardProps {
 const CategoryCard: React.FC<CategoryCardProps> = ({ title, subtitle, contentList }) => {
     const [expandedContent, setExpandedContent] = useState<Content | null>(null);
 
+    // Function to generate default labels based on category type
+    const getDefaultLabels = (category: string) => {
+        let labelinfo1 = 'Date';
+        let labelinfo2 = 'Watched with';
+        let labelinfo3 = 'Review';
+
+        if (category === 'Books') {
+            labelinfo1 = 'Date';
+            labelinfo2 = 'Read on';
+            labelinfo3 = 'Written by';
+        } else if (category === 'Flights') {
+            labelinfo1 = 'Flight number';
+            labelinfo2 = 'Arrival date';
+            labelinfo3 = 'Distance';
+        }
+        return { labelinfo1, labelinfo2, labelinfo3 };
+    };
+
     const handleContentClick = (content: Content) => {
         setExpandedContent(content === expandedContent ? null : content);
     };
@@ -39,8 +57,14 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ title, subtitle, contentLis
                     </div>
                     {expandedContent === content && (
                         <div className="flex flex-col mt-2 gap-1">
-                            <p className="text-sm text-muted-foreground">{content.info2}</p>
-                            <p className="text-sm text-muted-foreground">{content.info3}</p>
+                            <div className="flex flex-row g-4 justify-between pl-4">
+                                <p className="text-sm">{getDefaultLabels(title).labelinfo2}</p>
+                                <p className="text-sm text-muted-foreground">{content.info2}</p>
+                            </div>
+                            <div className="flex flex-row g-4 justify-between pl-4">
+                                <p className="text-sm">{getDefaultLabels(title).labelinfo3}</p>                                
+                                <p className="text-sm text-muted-foreground">{content.info3}</p>
+                            </div>
                         </div>
                     )}
                 </div>

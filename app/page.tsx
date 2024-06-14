@@ -7,6 +7,7 @@ import ActivityLogCard from '@/app/ui/activity-log-card';
 import { movies, books, flights } from '@/lib/placeholder-data.js';
 import { Button } from "@/components/ui/button"
 
+
 const MyLogbookPage: React.FC = () => {
     const [selectedCategory, setSelectedCategory] = useState('All Categories');
     const [showActivityLog, setShowActivityLog] = useState(false);
