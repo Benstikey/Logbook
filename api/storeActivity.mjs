@@ -1,5 +1,6 @@
 import pkg from 'pg';
 const { Pool } = pkg;
+import { v4 as uuidv4, validate as uuidValidate } from 'uuid';
 
 // Create a new pool using the connection string from your .env file
 const pool = new Pool({
@@ -19,6 +20,11 @@ export default async (req, res) => {
     const { userId, category, activity, date, info2, info3, info4 } = req.body;
 
     console.log('Received data:', { userId, category, activity, date, info2, info3, info4 });
+
+    if (!uuidValidate(userId)) {
+        res.status(400).json({ status: 'error', message: 'Invalid userId format' });
+        return;
+    }
 
     try {
         const queryText = 'INSERT INTO activities(userId, category, activity, date, info2, info3, info4) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *';
