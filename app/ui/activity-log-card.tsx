@@ -43,14 +43,21 @@ const ActivityLogCard: React.FC<ActivityCardProps> = ({ onClose }) => {
     const [info4, setInfo4] = useState('');
 
     // Handle date picker
-    const [date, setDate] = React.useState<Date>()
+    const [date, setDate] = useState<Date | undefined>(undefined);
 
     const handleSubmit = async () => {
+        if (!date) {
+            toast.error('Please select a date');
+            return;
+        }
+
+        const formattedDate = format(date, 'yyyy-MM-dd');
+
         const activityData = {
             userId,
             category,
             activity,
-            date,
+            date: formattedDate,
             info2,
             info3,
             info4
