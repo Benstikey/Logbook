@@ -1,5 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { Pool } from 'pg';
+const { Pool } = require('pg');
 
 // Create a new pool using the connection string from your .env file
 const pool = new Pool({
@@ -9,7 +8,7 @@ const pool = new Pool({
     }
 });
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+module.exports = async (req, res) => {
     if (req.method !== 'POST') {
         res.setHeader('Allow', ['POST']);
         res.status(405).end(`Method ${req.method} Not Allowed`);
