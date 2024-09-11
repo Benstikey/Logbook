@@ -35,19 +35,19 @@ export default async (req, res) => {
             let info1, info2, info3;
             switch (activity.category.toLowerCase()) {
                 case 'movies':
-                    info1 = activity.date;
-                    info2 = activity.watched_with;
-                    info3 = activity.review;
+                    info1 = activity.info2; // Watched on
+                    info2 = activity.info3; // Review
+                    info3 = activity.info4; // Directed by
                     break;
                 case 'books':
-                    info1 = activity.date;
-                    info2 = activity.read_on;
-                    info3 = activity.written_by;
+                    info1 = activity.info2; // Read on
+                    info2 = activity.info3; // Review
+                    info3 = activity.info4; // Written by
                     break;
                 case 'flights':
-                    info1 = activity.flight_number;
-                    info2 = activity.arrival_date;
-                    info3 = activity.distance;
+                    info1 = activity.info2; // Flight Number
+                    info2 = activity.info3; // Distance
+                    info3 = activity.info4; // Days Traveling
                     break;
                 default:
                     info1 = activity.info2;

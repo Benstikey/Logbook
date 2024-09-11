@@ -46,16 +46,16 @@ export default async (req, res) => {
 
         switch (category.toLowerCase()) {
             case 'movies':
-                queryText = 'INSERT INTO activities(userId, category, activity, date, watched_with, review) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
-                queryParams = [uuidUserId, category, activity, date, info2, info3];
+                queryText = 'INSERT INTO activities(userId, category, activity, date, info2, info3, info4) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *';
+                queryParams = [uuidUserId, category, activity, date, info2, info3, info4]; // info2: Watched on, info3: Review, info4: Directed by
                 break;
             case 'books':
-                queryText = 'INSERT INTO activities(userId, category, activity, date, read_on, written_by) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
-                queryParams = [uuidUserId, category, activity, date, info2, info3];
+                queryText = 'INSERT INTO activities(userId, category, activity, date, info2, info3, info4) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *';
+                queryParams = [uuidUserId, category, activity, date, info2, info3, info4]; // info2: Read on, info3: Review, info4: Written by
                 break;
             case 'flights':
-                queryText = 'INSERT INTO activities(userId, category, activity, flight_number, arrival_date, distance) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
-                queryParams = [uuidUserId, category, activity, info2, date, info3];
+                queryText = 'INSERT INTO activities(userId, category, activity, date, info2, info3, info4) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *';
+                queryParams = [uuidUserId, category, activity, date, info2, info3, info4]; // info2: Flight Number, info3: Distance, info4: Days Traveling
                 break;
             default:
                 queryText = 'INSERT INTO activities(userId, category, activity, date, info2, info3, info4) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *';
