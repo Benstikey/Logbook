@@ -1,4 +1,5 @@
-import { Pool } from 'pg';
+import pkg from 'pg';
+const { Pool } = pkg;
 
 // Create a new pool using the connection string from your .env file
 const pool = new Pool({
@@ -8,7 +9,7 @@ const pool = new Pool({
     }
 });
 
-export default async (req, res) => {
+module.exports = async (req, res) => {
     const { userId } = req.query;
 
     console.log('Fetching activities for user:', userId);
