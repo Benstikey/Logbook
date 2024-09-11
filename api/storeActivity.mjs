@@ -1,6 +1,7 @@
 import pkg from 'pg';
 const { Pool } = pkg;
-import { validate as uuidValidate } from 'uuid';
+// Remove the uuid import as we won't be using it
+// import { validate as uuidValidate } from 'uuid';
 
 // Create a new pool using the connection string from your .env file
 const pool = new Pool({
@@ -27,9 +28,17 @@ export default async (req, res) => {
         return;
     }
 
-    if (!uuidValidate(userId)) {
-        console.error('Invalid userId format:', userId);
-        res.status(400).json({ status: 'error', message: 'Invalid userId format' });
+    // Check if userId is a non-empty string instead of validating UUID format
+    if (typeof userId !== 'string' || userId.trim() === '') {
+        console.error('Invalid userId:', userId);
+        res.status(400).json({ status: 'error', message: 'Invalid userId' });
+        return;
+    }
+
+    // Validate date format
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+        console.error('Invalid date format:', date);
+        res.status(400).json({ status: 'error', message: 'Invalid date format' });
         return;
     }
 
