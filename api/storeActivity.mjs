@@ -1,4 +1,4 @@
-const { Pool } = require('pg');
+import { Pool } from 'pg';
 
 // Create a new pool using the connection string from your .env file
 const pool = new Pool({
@@ -8,7 +8,7 @@ const pool = new Pool({
     }
 });
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
     if (req.method !== 'POST') {
         res.setHeader('Allow', ['POST']);
         res.status(405).end(`Method ${req.method} Not Allowed`);
