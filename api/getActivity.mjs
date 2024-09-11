@@ -9,7 +9,7 @@ const pool = new Pool({
     }
 });
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
     const { userId } = req.query;
 
     console.log('Fetching activities for user:', userId);

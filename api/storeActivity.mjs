@@ -1,7 +1,9 @@
 import pkg from 'pg';
 const { Pool } = pkg;
-// Remove the uuid import as we won't be using it
-// import { validate as uuidValidate } from 'uuid';
+import { v5 as uuidv5 } from 'uuid';
+
+// Create a UUID namespace (you can use any valid UUID here)
+const UUID_NAMESPACE = '1b671a64-40d5-491e-99b0-da01ff1f3341';
 
 // Create a new pool using the connection string from your .env file
 const pool = new Pool({
@@ -28,12 +30,8 @@ export default async (req, res) => {
         return;
     }
 
-    // Check if userId is a non-empty string instead of validating UUID format
-    if (typeof userId !== 'string' || userId.trim() === '') {
-        console.error('Invalid userId:', userId);
-        res.status(400).json({ status: 'error', message: 'Invalid userId' });
-        return;
-    }
+    // Generate a UUID from the Clerk userId
+    const uuidUserId = uuidv5(userId, UUID_NAMESPACE);
 
     // Validate date format
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
@@ -44,7 +42,7 @@ export default async (req, res) => {
 
     try {
         const queryText = 'INSERT INTO activities(userId, category, activity, date, info2, info3, info4) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *';
-        const queryParams = [userId, category, activity, date, info2, info3, info4];
+        const queryParams = [uuidUserId, category, activity, date, info2, info3, info4];
         const response = await pool.query(queryText, queryParams);
 
         res.json({ status: 'success', data: response.rows[0] });
