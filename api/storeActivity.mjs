@@ -1,6 +1,6 @@
 import pkg from 'pg';
 const { Pool } = pkg;
-import { v4 as uuidv4, validate as uuidValidate } from 'uuid';
+import { validate as uuidValidate } from 'uuid';
 
 // Create a new pool using the connection string from your .env file
 const pool = new Pool({
