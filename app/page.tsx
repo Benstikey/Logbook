@@ -4,12 +4,15 @@ import React, { useState, useEffect } from 'react';
 import NavbarMenu from '@/app/ui/navbar-menu';
 import CategoryCard from '@/app/ui/category-card';
 import ActivityLogCard from '@/app/ui/activity-log-card';
-import { movies, books, flights } from '@/lib/placeholder-data.js';
 import { Button } from "@/components/ui/button"
 import { UserButton, useUser } from '@clerk/nextjs'
 
 interface Activity {
     category: string;
+    title: string;  // Add this line
+    info1: string;  // Add this line
+    info2: string;  // Add this line
+    info3: string;  // Add this line
     // Add other properties of Activity if needed
 }
 
@@ -63,10 +66,10 @@ const MyLogbookPage: React.FC = () => {
 
     function mapActivitiesToContent(activities: Activity[]): Content[] {
         return activities.map(activity => ({
-            title: activity.category, // Adjust this mapping as needed
-            info1: '', // Add appropriate mappings
-            info2: '',
-            info3: ''
+            title: activity.title,
+            info1: activity.info1,
+            info2: activity.info2,
+            info3: activity.info3
         }));
     };
 

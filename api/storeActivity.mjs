@@ -41,8 +41,27 @@ export default async (req, res) => {
     }
 
     try {
-        const queryText = 'INSERT INTO activities(userId, category, activity, date, info2, info3, info4) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *';
-        const queryParams = [uuidUserId, category, activity, date, info2, info3, info4];
+        let queryText;
+        let queryParams;
+
+        switch (category.toLowerCase()) {
+            case 'movies':
+                queryText = 'INSERT INTO activities(userId, category, activity, date, watched_with, review) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
+                queryParams = [uuidUserId, category, activity, date, info2, info3];
+                break;
+            case 'books':
+                queryText = 'INSERT INTO activities(userId, category, activity, date, read_on, written_by) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
+                queryParams = [uuidUserId, category, activity, date, info2, info3];
+                break;
+            case 'flights':
+                queryText = 'INSERT INTO activities(userId, category, activity, flight_number, arrival_date, distance) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
+                queryParams = [uuidUserId, category, activity, info2, date, info3];
+                break;
+            default:
+                queryText = 'INSERT INTO activities(userId, category, activity, date, info2, info3, info4) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *';
+                queryParams = [uuidUserId, category, activity, date, info2, info3, info4];
+        }
+
         const response = await pool.query(queryText, queryParams);
 
         res.json({ status: 'success', data: response.rows[0] });

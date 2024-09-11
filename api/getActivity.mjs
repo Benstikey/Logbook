@@ -1,5 +1,9 @@
 import pkg from 'pg';
 const { Pool } = pkg;
+import { v5 as uuidv5 } from 'uuid';
+
+// Create a UUID namespace (use the same one as in storeActivity.mjs)
+const UUID_NAMESPACE = '1b671a64-40d5-491e-99b0-da01ff1f3341';
 
 // Create a new pool using the connection string from your .env file
 const pool = new Pool({
@@ -14,12 +18,52 @@ export default async (req, res) => {
 
     console.log('Fetching activities for user:', userId);
 
+    if (!userId) {
+        res.status(400).json({ status: 'error', message: 'Missing userId' });
+        return;
+    }
+
+    // Generate a UUID from the Clerk userId
+    const uuidUserId = uuidv5(userId, UUID_NAMESPACE);
+
     try {
         const queryText = 'SELECT * FROM activities WHERE userId = $1';
-        const queryParams = [userId];
+        const queryParams = [uuidUserId];
         const response = await pool.query(queryText, queryParams);
 
-        res.json({ status: 'success', data: response.rows });
+        const activities = response.rows.map(activity => {
+            let info1, info2, info3;
+            switch (activity.category.toLowerCase()) {
+                case 'movies':
+                    info1 = activity.date;
+                    info2 = activity.watched_with;
+                    info3 = activity.review;
+                    break;
+                case 'books':
+                    info1 = activity.date;
+                    info2 = activity.read_on;
+                    info3 = activity.written_by;
+                    break;
+                case 'flights':
+                    info1 = activity.flight_number;
+                    info2 = activity.arrival_date;
+                    info3 = activity.distance;
+                    break;
+                default:
+                    info1 = activity.info2;
+                    info2 = activity.info3;
+                    info3 = activity.info4;
+            }
+            return {
+                title: activity.activity,
+                category: activity.category,
+                info1,
+                info2,
+                info3
+            };
+        });
+
+        res.json({ status: 'success', data: activities });
     } catch (error) {
         console.error('Error fetching activities:', error);
         res.status(500).json({ status: 'error', message: 'Error fetching activities' });
