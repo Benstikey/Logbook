@@ -76,7 +76,8 @@ const ActivityLogCard: React.FC<ActivityCardProps> = ({ onClose }) => {
                 toast.success('Activity submitted successfully!');
                 onClose();  // Close the card after successful submission
             } else {
-                console.error('Failed to submit activity');
+                const errorText = await response.text();
+                console.error('Failed to submit activity:', errorText);
                 toast.error('Failed to submit activity');
             }
         } catch (error) {
