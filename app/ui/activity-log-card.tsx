@@ -92,9 +92,9 @@ const ActivityLogCard: React.FC<ActivityCardProps> = ({ onClose }) => {
             <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">Log an Activity</h2>
             <div className="flex flex-col gap-2">
                 <Label>Category</Label>
-                <Select>
+                <Select onValueChange={setCategory}>
                     <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Category" onChange={e => setCategory((e.target as HTMLInputElement).value)} />
+                        <SelectValue placeholder="Category" />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>

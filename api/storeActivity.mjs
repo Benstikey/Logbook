@@ -21,7 +21,14 @@ export default async (req, res) => {
 
     console.log('Received data:', { userId, category, activity, date, info2, info3, info4 });
 
+    if (!userId || !category || !activity || !date) {
+        console.error('Missing required fields:', { userId, category, activity, date });
+        res.status(400).json({ status: 'error', message: 'Missing required fields' });
+        return;
+    }
+
     if (!uuidValidate(userId)) {
+        console.error('Invalid userId format:', userId);
         res.status(400).json({ status: 'error', message: 'Invalid userId format' });
         return;
     }
