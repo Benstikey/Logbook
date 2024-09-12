@@ -21,6 +21,7 @@ interface Content {
     info1: string;
     info2: string;
     info3: string;
+    date: string;  // Add this line to include the date property
 }
 
 const MyLogbookPage: React.FC = () => {
@@ -69,7 +70,8 @@ const MyLogbookPage: React.FC = () => {
             title: activity.title,
             info1: activity.info1,
             info2: activity.info2,
-            info3: activity.info3
+            info3: activity.info3,
+            date: new Date().toISOString() // Add this line to include the date
         }));
     };
 
@@ -100,11 +102,13 @@ const MyLogbookPage: React.FC = () => {
                         <CategoryCard title="Movies" subtitle="Movies I watched" contentList={mapActivitiesToContent(filterActivitiesByCategory('movies'))} />
                         <CategoryCard title="Books" subtitle="Books I read" contentList={mapActivitiesToContent(filterActivitiesByCategory('books'))} />
                         <CategoryCard title="Flights" subtitle="Flights I took" contentList={mapActivitiesToContent(filterActivitiesByCategory('flights'))} />
+                        <CategoryCard title="Concerts" subtitle="Concerts I attended" contentList={mapActivitiesToContent(filterActivitiesByCategory('concerts'))} /> {/* Added Concerts */}
                     </>
                 )}
                 {selectedCategory === 'Movies' && <CategoryCard title="Movies" subtitle="Movies I watched" contentList={mapActivitiesToContent(filterActivitiesByCategory('movies'))} />}
                 {selectedCategory === 'Books' && <CategoryCard title="Books" subtitle="Books I read" contentList={mapActivitiesToContent(filterActivitiesByCategory('books'))} />}
                 {selectedCategory === 'Flights' && <CategoryCard title="Flights" subtitle="Flights I took" contentList={mapActivitiesToContent(filterActivitiesByCategory('flights'))} />}
+                {selectedCategory === 'Concerts' && <CategoryCard title="Concerts" subtitle="Concerts I attended" contentList={mapActivitiesToContent(filterActivitiesByCategory('concerts'))} />} {/* Added Concerts */}
                 {/* Conditionally render other CategoryCards based on selectedCategory */}
             </div>
         </div>

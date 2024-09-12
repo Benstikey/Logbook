@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Calendar } from "@/components/ui/calendar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -41,9 +41,66 @@ const ActivityLogCard: React.FC<ActivityCardProps> = ({ onClose }) => {
     const [info2, setInfo2] = useState('');
     const [info3, setInfo3] = useState('');
     const [info4, setInfo4] = useState('');
+    const [labels, setLabels] = useState({
+        activity: '',
+        labelInfo1: '',
+        labelInfo2: '',
+        labelInfo3: '',
+        labelInfo4: '',
+    });
 
     // Handle date picker
     const [date, setDate] = useState<Date | undefined>(undefined);
+
+    const getLabelsByCategory = (category: string) => {
+        switch (category) {
+            case 'Movies':
+                return {
+                    activity: 'Title',
+                    labelInfo1: 'Date watched on',
+                    labelInfo2: 'Watched with',
+                    labelInfo3: 'Review',
+                    labelInfo4: 'Directed by',
+                };
+            case 'Books':
+                return {
+                    activity: 'Title',
+                    labelInfo1: 'Date read on',
+                    labelInfo2: 'Written by',
+                    labelInfo3: 'Review',
+                    labelInfo4: 'Genre',
+                };
+            case 'Flights':
+                return {
+                    activity: 'Country of arrival',
+                    labelInfo1: 'Arrival date',
+                    labelInfo2: 'Distance',
+                    labelInfo3: 'Airline',
+                    labelInfo4: 'Days Traveling',
+                };
+            case 'Concerts':
+                return {
+                    activity: 'Concert Name',
+                    labelInfo1: 'Date of Concert',
+                    labelInfo2: 'Venue',
+                    labelInfo3: 'Artists',
+                    labelInfo4: 'Review',
+                };
+            default:
+                return {
+                    activity: 'Activity',
+                    labelInfo1: 'Information 1',
+                    labelInfo2: 'Information 2',
+                    labelInfo3: 'Information 3',
+                    labelInfo4: 'Information 4',
+                };
+        }
+    };
+
+    // Update labels whenever the category changes
+    useEffect(() => {
+        setLabels(getLabelsByCategory(category));
+    }, [category]);
 
     const handleSubmit = async () => {
         if (!date) {
@@ -97,70 +154,48 @@ const ActivityLogCard: React.FC<ActivityCardProps> = ({ onClose }) => {
         <div className="activity-card flex flex-col gap-4 justify-start">
             <ToastContainer />
             <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">Log an Activity</h2>
+            
             <div className="flex flex-col gap-2">
                 <Label>Category</Label>
                 <Select onValueChange={setCategory}>
                     <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Category" />
+                        <SelectValue placeholder="Select a category" />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
-                        <SelectLabel >Select a category</SelectLabel>
-                        <SelectItem value="books">Books</SelectItem>
-                        <SelectItem value="movies">Movies</SelectItem>
-                        <SelectItem value="series">Series</SelectItem>
-                        <SelectItem value="flights">Flights</SelectItem>
-                        <SelectItem value="concerts">Concerts</SelectItem>
+                            <SelectLabel>Select a category</SelectLabel>
+                            <SelectItem value="Movies">Movies</SelectItem>
+                            <SelectItem value="Books">Books</SelectItem>
+                            <SelectItem value="Flights">Flights</SelectItem>
+                            <SelectItem value="Concerts">Concerts</SelectItem>
                         </SelectGroup>
                     </SelectContent>
                 </Select>
             </div>
 
-            <div className="flex flex-col gap-2">
-                <Label>Activity</Label>
-                <Input placeholder="Your activity" onChange={e => setActivity(e.target.value)} />
-            </div>
+            {category && ( // Only render if a category is selected
+                <>
+                    <div className="flex flex-col gap-2">
+                        <Label>{labels.activity}</Label>
+                        <Input placeholder={labels.activity} onChange={e => setActivity(e.target.value)} />
+                    </div>
 
-            <div className="flex flex-col gap-2">
-                <Label>Information 1 - Date</Label>
-                <Popover>
-                    <PopoverTrigger asChild>
-                        <Button
-                        variant={"outline"}
-                        className={cn(
-                            "w-[240px] justify-start text-left font-normal",
-                            !date && "text-muted-foreground"
-                        )}
-                        >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {date ? format(date, "PPP") : <span>Pick a date</span>}
-                        </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                        mode="single"
-                        selected={date}
-                        onSelect={setDate}
-                        initialFocus
-                        />
-                    </PopoverContent>
-                </Popover>
-            </div>
+                    <div className="flex flex-col gap-2">
+                        <Label>{labels.labelInfo1}</Label>
+                        <Input placeholder={labels.labelInfo1} onChange={e => setInfo2(e.target.value)} />
+                    </div>
 
-            <div className="flex flex-col gap-2">
-                <Label>Information 2</Label>
-                <Input placeholder="Information 2" onChange={e => setInfo2(e.target.value)} />
-            </div>
+                    <div className="flex flex-col gap-2">
+                        <Label>{labels.labelInfo2}</Label>
+                        <Input placeholder={labels.labelInfo2} onChange={e => setInfo3(e.target.value)} />
+                    </div>
 
-            <div className="flex flex-col gap-2">
-                <Label>Information 3</Label>
-                <Input placeholder="Information 3" onChange={e => setInfo3(e.target.value)} />
-            </div>
-
-            <div className="flex flex-col gap-2">
-                <Label>Information 4</Label>
-                <Input placeholder="Information 4" onChange={e => setInfo4(e.target.value)} />
-            </div>
+                    <div className="flex flex-col gap-2">
+                        <Label>{labels.labelInfo3}</Label>
+                        <Input placeholder={labels.labelInfo3} onChange={e => setInfo4(e.target.value)} />
+                    </div>
+                </>
+            )}
 
             <div className="flex flex-row justify-between">
                 <Button variant="outline" onClick={onClose}>Close</Button>

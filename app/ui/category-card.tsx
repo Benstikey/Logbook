@@ -5,7 +5,7 @@ import { Separator } from "@/components/ui/separator"
 
 interface Content {
     title: string;
-    info1: string;
+    date: string; // Change info1 to date
     info2: string;
     info3: string;
 }
@@ -18,6 +18,12 @@ interface CategoryCardProps {
 
 const CategoryCard: React.FC<CategoryCardProps> = ({ title, subtitle, contentList }) => {
     const [expandedContent, setExpandedContent] = useState<Content | null>(null);
+
+    // Function to format date from yyyy-mm-dd to dd-mm-yyyy
+    const formatDate = (dateString: string) => {
+        const [year, month, day] = dateString.split('-');
+        return `${day}-${month}-${year}`;
+    };
 
     // Function to generate default labels based on category type
     const getDefaultLabels = (category: string) => {
@@ -53,7 +59,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ title, subtitle, contentLis
                     <div className="flex flex-row items-center justify-between gap-2">
                         <h3 className="scroll-m-20 text font-semibold tracking-tight">{content.title}</h3>
                         <Separator className="flex-1"/>
-                        <p className="text-sm text-muted-foreground">{content.info1}</p>
+                        <p className="text-sm text-muted-foreground">{formatDate(content.date)}</p> {/* Display formatted date */}
                     </div>
                     {expandedContent === content && (
                         <div className="flex flex-col mt-2 gap-1">
