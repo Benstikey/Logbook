@@ -1,10 +1,17 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { Calendar } from "@/components/ui/calendar"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { format } from "date-fns";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
     Select,
     SelectContent,
@@ -13,20 +20,8 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select"
-import { format } from "date-fns"
-import { CalendarIcon } from "@radix-ui/react-icons"
- 
-import { cn } from "@/lib/utils"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-
-import { useUser } from '@clerk/clerk-react';
+} from "@/components/ui/select";
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '@clerk/nextjs';
 
 interface ActivityCardProps {
@@ -34,7 +29,6 @@ interface ActivityCardProps {
 }
 
 const ActivityLogCard: React.FC<ActivityCardProps> = ({ onClose }) => {
-
     const { userId } = useAuth();
     const [category, setCategory] = useState('');
     const [activity, setActivity] = useState('');
@@ -48,8 +42,6 @@ const ActivityLogCard: React.FC<ActivityCardProps> = ({ onClose }) => {
         labelInfo3: '',
         labelInfo4: '',
     });
-
-    // Handle date picker
     const [date, setDate] = useState<Date | undefined>(undefined);
 
     const getLabelsByCategory = (category: string) => {
@@ -97,7 +89,6 @@ const ActivityLogCard: React.FC<ActivityCardProps> = ({ onClose }) => {
         }
     };
 
-    // Update labels whenever the category changes
     useEffect(() => {
         setLabels(getLabelsByCategory(category));
     }, [category]);
@@ -120,8 +111,6 @@ const ActivityLogCard: React.FC<ActivityCardProps> = ({ onClose }) => {
             info4
         };
 
-        console.log('Submitting activity data:', activityData);
-    
         try {
             const response = await fetch('/api/storeActivity', {
                 method: 'POST',
@@ -131,17 +120,10 @@ const ActivityLogCard: React.FC<ActivityCardProps> = ({ onClose }) => {
                 body: JSON.stringify(activityData),
             });
 
-            console.log('Response status:', response.status);
-            console.log('Response data:', await response.json());
-    
             if (response.ok) {
-                const data = await response.json();
-                console.log('Success data:', data);  // Handle response accordingly
                 toast.success('Activity submitted successfully!');
                 onClose();  // Close the card after successful submission
             } else {
-                const errorText = await response.text();
-                console.error('Failed to submit activity:', errorText);
                 toast.error('Failed to submit activity');
             }
         } catch (error) {
@@ -179,7 +161,29 @@ const ActivityLogCard: React.FC<ActivityCardProps> = ({ onClose }) => {
                         <Label>{labels.activity}</Label>
                         <Input placeholder={labels.activity} onChange={e => setActivity(e.target.value)} />
                     </div>
-
+                    {/* Date Picker with Calendar */}
+                    <div className="flex flex-col gap-2">
+                        <Label>Date</Label>
+                        <Popover>
+                            <PopoverTrigger asChild>
+                                <Button
+                                    variant={"outline"}
+                                    className={`w-full justify-start text-left font-normal ${!date ? "text-muted-foreground" : ""}`}
+                                >
+                                    <CalendarIcon className="mr-2 h-4 w-4" />
+                                    {date ? format(date, "PPP") : <span>Pick a date</span>}
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0" align="start">
+                                <Calendar
+                                    mode="single"
+                                    selected={date}
+                                    onSelect={setDate} // Update date state
+                                    initialFocus
+                                />
+                            </PopoverContent>
+                        </Popover>
+                    </div>
                     <div className="flex flex-col gap-2">
                         <Label>{labels.labelInfo1}</Label>
                         <Input placeholder={labels.labelInfo1} onChange={e => setInfo2(e.target.value)} />
