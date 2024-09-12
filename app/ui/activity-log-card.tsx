@@ -46,7 +46,7 @@ const ActivityLogCard: React.FC<ActivityCardProps> = ({ onClose }) => {
 
     const getLabelsByCategory = (category: string) => {
         switch (category) {
-            case 'Movies':
+            case 'movies':
                 return {
                     activity: 'Title',
                     labelInfo1: 'Date watched on',
@@ -54,7 +54,7 @@ const ActivityLogCard: React.FC<ActivityCardProps> = ({ onClose }) => {
                     labelInfo3: 'Review',
                     labelInfo4: 'Directed by',
                 };
-            case 'Books':
+            case 'books':
                 return {
                     activity: 'Title',
                     labelInfo1: 'Date read on',
@@ -62,7 +62,7 @@ const ActivityLogCard: React.FC<ActivityCardProps> = ({ onClose }) => {
                     labelInfo3: 'Review',
                     labelInfo4: 'Genre',
                 };
-            case 'Flights':
+            case 'flights':
                 return {
                     activity: 'Country of arrival',
                     labelInfo1: 'Arrival date',
@@ -70,7 +70,7 @@ const ActivityLogCard: React.FC<ActivityCardProps> = ({ onClose }) => {
                     labelInfo3: 'Airline',
                     labelInfo4: 'Days Traveling',
                 };
-            case 'Concerts':
+            case 'concerts':
                 return {
                     activity: 'Concert Name',
                     labelInfo1: 'Date of Concert',
@@ -146,10 +146,10 @@ const ActivityLogCard: React.FC<ActivityCardProps> = ({ onClose }) => {
                     <SelectContent>
                         <SelectGroup>
                             <SelectLabel>Select a category</SelectLabel>
-                            <SelectItem value="Movies">Movies</SelectItem>
-                            <SelectItem value="Books">Books</SelectItem>
-                            <SelectItem value="Flights">Flights</SelectItem>
-                            <SelectItem value="Concerts">Concerts</SelectItem>
+                            <SelectItem value="movies">Movies</SelectItem>
+                            <SelectItem value="books">Books</SelectItem>
+                            <SelectItem value="flights">Flights</SelectItem>
+                            <SelectItem value="concerts">Concerts</SelectItem>
                         </SelectGroup>
                     </SelectContent>
                 </Select>
